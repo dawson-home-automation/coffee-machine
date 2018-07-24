@@ -4,14 +4,7 @@ WiFiClientSecure wifi;
 PubSubClient client(wifi);
 char* topic_subscribed;
 
-void callback(char* topic, byte* payload, unsigned int length) {
-  String payloadStr = String((char *) payload).substring(0, length);
-  if (payloadStr.indexOf("command") >= 0){
-    publish_message(topic, 0, "The is executed!", true);
-  }
-}
-
-void setupMQTT() {
+void setupMQTT(std::function<void(char*, uint8_t*, unsigned int)> callback) {
   client.setServer(MQTT_SERVER, MQTT_SERVER_PORT);
   client.setCallback(callback);
 }
