@@ -1,3 +1,3 @@
 #include <mqtt_client.h>
 
-void info(String action, char* message);
+void info(String action, const char* message);

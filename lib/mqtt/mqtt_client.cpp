@@ -1,5 +1,4 @@
 #include <mqtt_client.h>
-#include <config.h>
 
 WiFiClientSecure wifi;
 PubSubClient client(wifi);
@@ -31,7 +30,7 @@ void subscribe(char* topic) {
   client.subscribe(topic, 0);
 }
 
-void publish_message(char * topic, int qos, char * message, boolean retained) {
+void publish_message(const char * topic, int qos, const char * message, boolean retained) {
   mqtt_connect();
   client.publish(topic, message, retained);
 }

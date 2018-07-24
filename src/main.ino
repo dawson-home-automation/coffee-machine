@@ -5,7 +5,7 @@ void setup() {
 
   setupMQTT();
   setupWifi();
-  subscribe("topic/to/use");
+  subscribe((char *) "topic/to/use");
 }
 
 void loop() {
