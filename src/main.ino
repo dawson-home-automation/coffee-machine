@@ -1,4 +1,5 @@
 #include <wifi.h>
+#include <mqtt_client.h>
 
 void setup() {
   Serial.begin(9600);

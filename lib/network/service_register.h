@@ -1,4 +1,4 @@
-#include <mqtt_client.cpp>
+#include <mqtt_client.h>
 #include <smart_logger.h>
 
 String getMacAddress();
