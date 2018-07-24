@@ -5,3 +5,4 @@
 #define MQTT_SERVER_PORT 0
 #define MQTT_USERNAME "<USERNAME>"
 #define MQTT_PASSWORD "<PASSWORD>"
+#define MQTT_TOPIC "<TOPIC>"

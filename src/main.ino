@@ -1,12 +1,17 @@
 #include <wifi.h>
 #include <mqtt_client.h>
+#include <node_mapping.h>
+#include <configs.h>
+
+#define COFFEE_MACHINE_SWITCH D4
 
 void setup() {
   Serial.begin(9600);
+  pinMode(COFFEE_MACHINE_SWITCH, OUTPUT);
 
-  setupMQTT(callback);
+  setupMQTT(process_machine_state);
   setupWifi();
-  subscribe((char *) "topic/to/use");
+  subscribe((char *) MQTT_TOPIC);
 }
 
 void loop() {
@@ -16,9 +21,11 @@ void loop() {
   delay(200);
 }
 
-void callback(char* topic, byte* payload, unsigned int length) {
+void process_machine_state(char* topic, byte* payload, unsigned int length) {
   String payloadStr = String((char *) payload).substring(0, length);
-  if (payloadStr.indexOf("command") >= 0){
-    publish_message(topic, 0, "The is executed!", true);
+  if (payloadStr.indexOf("coffee_machine=on") >= 0) {
+    digitalWrite(COFFEE_MACHINE_SWITCH, HIGH);
+  } else if (payloadStr.indexOf("coffee_machine=off") >= 0) {
+    digitalWrite(COFFEE_MACHINE_SWITCH, LOW);
   }
 }
