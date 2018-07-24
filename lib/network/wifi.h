@@ -1,6 +1,6 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
-#include <config.h>
+#include <configs.h>
 #include <service_register.h>
 #include <update_server.h>
 

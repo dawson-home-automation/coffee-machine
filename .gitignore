@@ -3,4 +3,4 @@
 .clang_complete
 .gcc-flags.json
 *.DS_Store
-lib/config/config.h
+lib/config/configs.h
