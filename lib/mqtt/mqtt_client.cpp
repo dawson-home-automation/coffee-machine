@@ -1,6 +1,11 @@
 #include <mqtt_client.h>
 
-WiFiClientSecure wifi;
+#ifdef USE_SECURE_CONNECTION
+    WiFiClientSecure wifi;
+#else
+    WiFiClient wifi;
+#endif
+
 PubSubClient client(wifi);
 char* topic_subscribed;
 
@@ -33,10 +38,18 @@ void mqtt_connect() {
   WiFi.macAddress(mac);
 
   while (!client.connected()) {
-    if (client.connect((char *) mac, MQTT_USERNAME, MQTT_PASSWORD)) {
+    int result;
+
+    if (MQTT_USERNAME == NULL) {
+      result = client.connect((char *) mac);
+    } else {
+      result = client.connect((char *) mac, MQTT_USERNAME, MQTT_PASSWORD);
+    }
+
+    if (result) {
       Serial.println("action=mqtt status=success");
     } else {
-      Serial.printf("action=mqtt status=error code=%d", client.state());
+      Serial.printf("action=mqtt status=error code=%d\n", client.state());
     }
   }
 }
