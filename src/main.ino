@@ -3,7 +3,7 @@
 #include <node_mapping.h>
 #include <configs.h>
 
-#define COFFEE_MACHINE_SWITCH D4
+#define COFFEE_MACHINE_SWITCH D9
 
 void setup() {
   Serial.begin(9600);
