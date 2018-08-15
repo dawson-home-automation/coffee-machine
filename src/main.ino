@@ -1,6 +1,6 @@
-#include <wifi.h>
-#include <mqtt_client.h>
-#include <node_mapping.h>
+#include "network/wifi.h"
+#include "mqtt/mqtt_client.h"
+#include "node_mapping/node_mapping.h"
 #include <configs.h>
 
 #define COFFEE_MACHINE_SWITCH D9
@@ -15,7 +15,7 @@ void setup() {
             (char *) MQTT_PASSWORD,
             false,
             process_machine_state);
-            
+
   setupWifi((char *) NETWORK_SSID, (char *) NETWORK_PASSWORD);
   subscribe((char *) MQTT_TOPIC);
 }
