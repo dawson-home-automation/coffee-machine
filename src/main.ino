@@ -9,13 +9,19 @@ void setup() {
   Serial.begin(9600);
   pinMode(COFFEE_MACHINE_SWITCH, OUTPUT);
 
-  setupMQTT(process_machine_state);
-  setupWifi(NETWORK_SSID, NETWORK_PASSWORD);
+  setupMQTT((char *) MQTT_SERVER,
+            MQTT_SERVER_PORT,
+            (char *) MQTT_USERNAME,
+            (char *) MQTT_PASSWORD,
+            false,
+            process_machine_state);
+            
+  setupWifi((char *) NETWORK_SSID, (char *) NETWORK_PASSWORD);
   subscribe((char *) MQTT_TOPIC);
 }
 
 void loop() {
-  connectWifi(NETWORK_SSID, NETWORK_PASSWORD);
+  connectWifi((char *) NETWORK_SSID, (char *) NETWORK_PASSWORD);
   loopUpdateServer();
   loopMQTT();
   delay(200);

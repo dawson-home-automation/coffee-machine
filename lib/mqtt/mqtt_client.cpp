@@ -1,17 +1,30 @@
 #include <mqtt_client.h>
 
-#ifdef USE_SECURE_CONNECTION
-    WiFiClientSecure wifi;
-#else
-    WiFiClient wifi;
-#endif
-
-PubSubClient client(wifi);
+PubSubClient client;
 char* topic_subscribed;
+char* username;
+char* password;
 
-void setupMQTT(std::function<void(char*, uint8_t*, unsigned int)> callback) {
-  client.setServer(MQTT_SERVER, MQTT_SERVER_PORT);
+void setupMQTT(char* mqtt_server,
+               int mqtt_port,
+               char* mqtt_username,
+               char* mqtt_password,
+               boolean secure,
+               std::function<void(char*, uint8_t*, unsigned int)> callback) {
+
+  if (secure) {
+    WiFiClientSecure wifi_secure;
+    client.setClient(wifi_secure);
+  } else {
+    WiFiClient wifi;
+    client.setClient(wifi);
+  }
+
+  client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callback);
+
+  username = mqtt_username;
+  password = mqtt_password;
 }
 
 void loopMQTT() {
@@ -40,10 +53,10 @@ void mqtt_connect() {
   while (!client.connected()) {
     int result;
 
-    if (MQTT_USERNAME == NULL) {
+    if (username == NULL) {
       result = client.connect((char *) mac);
     } else {
-      result = client.connect((char *) mac, MQTT_USERNAME, MQTT_PASSWORD);
+      result = client.connect((char *) mac, username, password);
     }
 
     if (result) {
