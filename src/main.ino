@@ -10,12 +10,12 @@ void setup() {
   pinMode(COFFEE_MACHINE_SWITCH, OUTPUT);
 
   setupMQTT(process_machine_state);
-  setupWifi();
+  setupWifi(NETWORK_SSID, NETWORK_PASSWORD);
   subscribe((char *) MQTT_TOPIC);
 }
 
 void loop() {
-  connectWifi();
+  connectWifi(NETWORK_SSID, NETWORK_PASSWORD);
   loopUpdateServer();
   loopMQTT();
   delay(200);
