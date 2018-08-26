@@ -16,12 +16,12 @@ void setup() {
             false,
             process_machine_state);
 
-  setupWifi((char *) NETWORK_SSID, (char *) NETWORK_PASSWORD);
+  setupWifi((char *) NETWORK_SSID, (char *) NETWORK_PASSWORD, (char *) TARGET);
   subscribe((char *) MQTT_TOPIC);
 }
 
 void loop() {
-  connectWifi((char *) NETWORK_SSID, (char *) NETWORK_PASSWORD);
+  connectWifi((char *) NETWORK_SSID, (char *) NETWORK_PASSWORD, (char *) TARGET);
   loopUpdateServer();
   loopMQTT();
   delay(200);
